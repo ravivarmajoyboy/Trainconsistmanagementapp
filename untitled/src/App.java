@@ -1,39 +1,44 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        LinkedList<String> trainConsist = new LinkedList<>();
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        System.out.println("=== Train Chaining Management (UC4 - LinkedList) ===");
+        System.out.println("=== Train Formation Management (UC5 - LinkedHashSet) ===");
 
-        // Adding initial bogies
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        // Attaching bogies in specific order
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
 
-        System.out.println("Initial Consist: " + trainConsist);
+        // Attempting to add a duplicate bogie
+        System.out.println("Attempting to add duplicate: Sleeper...");
+        boolean isAdded = trainFormation.add("Sleeper");
 
-        // Requirement: Insert Pantry Car at position 2 (Index 2)
-        System.out.print("Adding Pantry Car at position 2...");
-        trainConsist.add(2, "Pantry Car");
-        System.out.println("\nUpdated Consist: " + trainConsist);
+        if (!isAdded) {
+            System.out.println("Constraint Violated: Sleeper is already attached. Duplicate ignored.");
+        }
 
-        // Requirement: Remove first and last bogie
-        System.out.println("Detaching First Bogie: " + trainConsist.removeFirst());
-        System.out.println("Detaching Last Bogie: " + trainConsist.removeLast());
+        // Displaying the final formation
+        System.out.println("\n--- Final Train Formation (Insertion Order Preserved) ---");
+        System.out.println(trainFormation);
 
-        // Display final ordered consist
-        System.out.println("\n--- Final Ordered Train Consist ---");
-        System.out.println(trainConsist);
-        System.out.println("Total Bogie Count: " + trainConsist.size());
+        // Capture user input to maintain the session
+        System.out.print("\nEnter a new bogie type to attach: ");
+        String newBogie = scanner.nextLine();
 
-        // User Input to keep program active
-        System.out.println("\nProgram continues. Press Enter to exit.");
-        scanner.nextLine();
+        if (trainFormation.add(newBogie)) {
+            System.out.println(newBogie + " attached successfully.");
+        } else {
+            System.out.println(newBogie + " already exists in the formation.");
+        }
+
+        System.out.println("Updated Formation: " + trainFormation);
+        System.out.println("\nProgram continues.");
 
         scanner.close();
     }
