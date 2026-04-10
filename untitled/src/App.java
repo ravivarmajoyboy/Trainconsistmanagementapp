@@ -1,33 +1,40 @@
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Set<String> bogieIds = new HashSet<>();
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        System.out.println("=== Train Bogie ID Tracker (UC3 - HashSet) ===");
+        System.out.println("=== Train Chaining Management (UC4 - LinkedList) ===");
 
-        System.out.print("Enter number of Bogie IDs to add: ");
-        int count = scanner.nextInt();
+        // Adding initial bogies
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");
+
+        System.out.println("Initial Consist: " + trainConsist);
+
+        // Requirement: Insert Pantry Car at position 2 (Index 2)
+        System.out.print("Adding Pantry Car at position 2...");
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("\nUpdated Consist: " + trainConsist);
+
+        // Requirement: Remove first and last bogie
+        System.out.println("Detaching First Bogie: " + trainConsist.removeFirst());
+        System.out.println("Detaching Last Bogie: " + trainConsist.removeLast());
+
+        // Display final ordered consist
+        System.out.println("\n--- Final Ordered Train Consist ---");
+        System.out.println(trainConsist);
+        System.out.println("Total Bogie Count: " + trainConsist.size());
+
+        // User Input to keep program active
+        System.out.println("\nProgram continues. Press Enter to exit.");
         scanner.nextLine();
 
-        for (int i = 0; i < count; i++) {
-            System.out.print("Enter Bogie ID: ");
-            String id = scanner.nextLine();
-
-            boolean added = bogieIds.add(id);
-            if (!added) {
-                System.out.println("Duplicate detected! ID " + id + " was ignored.");
-            }
-        }
-
-        System.out.println("\n--- Unique Bogie ID Inventory ---");
-        System.out.println("Unique IDs: " + bogieIds);
-        System.out.println("Total Unique Count: " + bogieIds.size());
-
-        System.out.println("\nProgram continues.");
         scanner.close();
     }
 }
