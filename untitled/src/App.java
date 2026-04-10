@@ -1,45 +1,37 @@
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Set<String> trainFormation = new LinkedHashSet<>();
+        Map<String, Integer> bogieCapacities = new HashMap<>();
 
-        System.out.println("=== Train Formation Management (UC5 - LinkedHashSet) ===");
+        System.out.println("=== Train Bogie Capacity Management (UC6 - HashMap) ===");
 
-        // Attaching bogies in specific order
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // Requirement: Mapping bogies to their seating/load capacities
+        bogieCapacities.put("Sleeper", 72);
+        bogieCapacities.put("AC Chair", 56);
+        bogieCapacities.put("First Class", 24);
+        bogieCapacities.put("General", 90);
 
-        // Attempting to add a duplicate bogie
-        System.out.println("Attempting to add duplicate: Sleeper...");
-        boolean isAdded = trainFormation.add("Sleeper");
-
-        if (!isAdded) {
-            System.out.println("Constraint Violated: Sleeper is already attached. Duplicate ignored.");
+        // Displaying capacity details using entrySet() iteration
+        System.out.println("\n--- Bogie Capacity Details ---");
+        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
+            System.out.println("Bogie Type: " + entry.getKey() + " | Capacity: " + entry.getValue() + " seats");
         }
 
-        // Displaying the final formation
-        System.out.println("\n--- Final Train Formation (Insertion Order Preserved) ---");
-        System.out.println(trainFormation);
+        // Simulating user lookup (Fast Lookup Benefit)
+        System.out.print("\nEnter a bogie name to check capacity: ");
+        String searchKey = scanner.nextLine();
 
-        // Capture user input to maintain the session
-        System.out.print("\nEnter a new bogie type to attach: ");
-        String newBogie = scanner.nextLine();
-
-        if (trainFormation.add(newBogie)) {
-            System.out.println(newBogie + " attached successfully.");
+        if (bogieCapacities.containsKey(searchKey)) {
+            System.out.println("The capacity of " + searchKey + " is " + bogieCapacities.get(searchKey) + ".");
         } else {
-            System.out.println(newBogie + " already exists in the formation.");
+            System.out.println("Bogie type not found in database.");
         }
 
-        System.out.println("Updated Formation: " + trainFormation);
         System.out.println("\nProgram continues.");
-
         scanner.close();
     }
 }
