@@ -1,37 +1,59 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+
+class Bogie {
+    private String name;
+    private int capacity;
+
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Bogie: %-12s | Capacity: %d seats", name, capacity);
+    }
+}
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map<String, Integer> bogieCapacities = new HashMap<>();
+        List<Bogie> trainConsist = new ArrayList<>();
 
-        System.out.println("=== Train Bogie Capacity Management (UC6 - HashMap) ===");
+        System.out.println("=== Train Capacity Sorting (UC7 - Comparator) ===");
 
-        // Requirement: Mapping bogies to their seating/load capacities
-        bogieCapacities.put("Sleeper", 72);
-        bogieCapacities.put("AC Chair", 56);
-        bogieCapacities.put("First Class", 24);
-        bogieCapacities.put("General", 90);
+        trainConsist.add(new Bogie("Sleeper", 72));
+        trainConsist.add(new Bogie("AC Chair", 56));
+        trainConsist.add(new Bogie("First Class", 24));
+        trainConsist.add(new Bogie("General", 90));
 
-        // Displaying capacity details using entrySet() iteration
-        System.out.println("\n--- Bogie Capacity Details ---");
-        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
-            System.out.println("Bogie Type: " + entry.getKey() + " | Capacity: " + entry.getValue() + " seats");
+        System.out.println("\n--- Unsorted Bogies ---");
+        for (Bogie b : trainConsist) {
+            System.out.println(b);
         }
 
-        // Simulating user lookup (Fast Lookup Benefit)
-        System.out.print("\nEnter a bogie name to check capacity: ");
-        String searchKey = scanner.nextLine();
+        trainConsist.sort(Comparator.comparingInt(Bogie::getCapacity));
 
-        if (bogieCapacities.containsKey(searchKey)) {
-            System.out.println("The capacity of " + searchKey + " is " + bogieCapacities.get(searchKey) + ".");
-        } else {
-            System.out.println("Bogie type not found in database.");
+        System.out.println("\n--- Bogies Sorted by Capacity (Ascending) ---");
+        for (Bogie b : trainConsist) {
+            System.out.println(b);
         }
 
         System.out.println("\nProgram continues.");
+        System.out.print("Press Enter to finish...");
+        scanner.nextLine();
+
         scanner.close();
     }
 }
